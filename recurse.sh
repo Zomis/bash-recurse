@@ -6,7 +6,7 @@ recurseCheck()
 {
   echo "Start recurse in $1"
   local f
-  for f in $1/**/* ; do
+  for f in $1/* ; do
     local PREV_DIR=`pwd`
     echo "Testing file $f"
     if [ -d $f ]; then
