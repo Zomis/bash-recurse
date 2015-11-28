@@ -1,29 +1,27 @@
 #!/bin/bash
 
-RUN_SCRIPT="~/recursescript/example/filecheck.sh"
+RUN_SCRIPT=$1
 
-recurseCheck()
-{
-  echo "Start recurse in $1"
+recurseCheck() {
   local f
   for f in $1/* ; do
     local PREV_DIR=`pwd`
-    echo "Testing file $f"
     if [ -d $f ]; then
-      echo "Directory $f..."
       cd $f
-      eval $RUN_SCRIPT
-      local RESULT=$?
-      echo "Result in $f was $RESULT"
-      recurseCheck $f
+      RESULT=`eval $RUN_SCRIPT`
+      local RESULT_CODE=$?
+      if [ $RESULT_CODE -eq 0 ]; then
+        echo "$f"
+        echo "$RESULT"
+        echo ""
+      else
+        recurseCheck $f
+      fi
       cd $PREV_DIR
-      echo "End $f"
     fi
   done;
 }
 
 START_DIR=`pwd`
-echo "Start directory is $START_DIR"
-
 recurseCheck $START_DIR
 
