@@ -1,5 +1,7 @@
 #!/bin/bash
 
+CURR_DIR=`pwd`
+echo "Running filecheck in $CURR_DIR"
 if [ -e "ok.txt" ]; then
     cat ok.txt
     exit 0
